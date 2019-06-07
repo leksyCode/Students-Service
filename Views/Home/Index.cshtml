@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h2>An Unordered HTML List</h2>
+
+    <ul>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+    </ul>
+
+    <h2>An Ordered HTML List</h2>
+
+    <ol>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+    </ol>
+    <div>
+        <input type="submit" id="getItemsButton" value="Получить данные" />
+    </div>
+
+</body>
+</html>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            var tokenKey = "tokenInfo";
+            //..................................
+            $('#getItemsButton').click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/values/',
+                    beforeSend: function (xhr) {
+
+                        var token = window.localStorage.getItem(tokenKey);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (xhr) {
+                        alert('Error: ' + xhr.status + ' ' + xhr.statusText + '\n' + JSON.parse(xhr.responseText).Message);
+                    }
+                });
+            });
+        })
+    </script>
+}

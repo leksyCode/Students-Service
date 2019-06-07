@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("/Scripts/logoutAjax.js");
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Students Base", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Login", "Login", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Registration", "Register", "Home", new { area = "" }, null)</li>
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("User"))
+                    {
+                        <div id="userInfo">
+                            <text>User: @User.Identity.Name </text>
+                            <input class="btn-danger" type="button" value="Выйти" id="logOut" />
+                        </div>
+                    }
+                    else if (User.IsInRole("Admin"))
+                    {
+                        <div id="userInfo">
+                            <text>Admin: @User.Identity.Name </text>
+                            <input class="btn-danger" type="button" value="Выйти" id="logOut" />
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+        </footer>
+    </div>
+
+   
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>
+
+@section scripts{
+       
+}

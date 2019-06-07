@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="loginForm">
+        <h3>Вход на сайт</h3>
+        <label>Введите email</label><br />
+        <input type="email" id="emailLogin" /> <br/><br />
+        <label>Введите пароль</label><br />
+        <input type="password" id="passwordLogin" /><br /><br />
+        <input type="submit" id="submitLogin" value="Логин" />
+    </div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            //...........................
+
+            var tokenKey = "tokenInfo";
+            $('#submitLogin').click(function (e) {
+                e.preventDefault();
+                var loginData = {
+                    grant_type: 'password',
+                    username: $('#emailLogin').val(),
+                    password: $('#passwordLogin').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Token',
+                    data: loginData,
+                    success: function (data) {
+                        // сохраняем в хранилище sessionStorage токен доступа
+                        window.localStorage.setItem(tokenKey, data.access_token);                        
+                        console.log(data.access_token);
+                        window.location.assign("Index");
+                    },
+                    error: function () {
+                        alert('При логине возникла ошибка');
+                    }
+                })
+            });
+        })
+    </script>
+}
