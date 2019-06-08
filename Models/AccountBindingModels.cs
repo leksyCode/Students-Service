@@ -39,6 +39,18 @@ namespace AuthenticationWebApi.Models
         public string Email { get; set; }
 
         [Required]
+        [StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 1)]
+        [DataType(DataType.Text)]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 1)]
+        [DataType(DataType.Text)]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
@@ -48,6 +60,15 @@ namespace AuthenticationWebApi.Models
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime BirthDate { get; set; }
+
+        [Required]
+        [StringLength(500, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 1)]
+        [DataType(DataType.Text)]
+        [Display(Name = "Comment")]
+        public string Comment { get; set; }
     }
 
     public class RegisterExternalBindingModel

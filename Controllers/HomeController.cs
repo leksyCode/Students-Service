@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AuthenticationWebApi.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +10,8 @@ namespace AuthenticationWebApi.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public HomeController()
         {
         }
@@ -18,9 +22,11 @@ namespace AuthenticationWebApi.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-
             ViewBag.Title = "Home Page";
 
+            var Users = db.Users.Include(u => u.Roles).ToList();
+            ViewBag.Users = Users;
+             
             return View();
         }
 

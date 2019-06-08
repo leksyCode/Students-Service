@@ -1,38 +1,74 @@
 ﻿@{
+
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<!DOCTYPE html>
-<html>
-<body>
 
-    <h2>An Unordered HTML List</h2>
+<h2>Students List</h2>
 
-    <ul>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-    </ul>
+<div>
+    <table>
+        <tr>
+            <th>User name</th>
+            <th style="padding-left: 20px;">First name</th>
+            <th style="padding-left: 20px;">Last name</th>
+            <th style="padding-left: 20px;">Bitrhdate</th>
+        </tr>
+        @foreach (var item in ViewBag.Users)
+        {
+        <tr>
+            <td>
+                @item.UserName
+            </td>
+            <td style="padding-left: 20px;">
+                @item.FirstName
+            </td>
+            <td style="padding-left: 20px;">
+                @item.LastName
+            </td>
+            <td style="padding-left: 20px;">
+                @item.BirthDate.ToString("dd.MM.yy")
+            </td>
+        </tr>
+        }
 
-    <h2>An Ordered HTML List</h2>
+    </table>
+</div>
 
-    <ol>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-    </ol>
-    <div>
-        <input type="submit" id="getItemsButton" value="Получить данные" />
-    </div>
 
-</body>
-</html>
 
 @section scripts{
     <script type="text/javascript">
+        $(document).ready(function () {
+
+            GetAllUsers();
+        });
+
+
+        function GetAllUsers() {
+            var tokenKey = "tokenInfo";
+
+            $.ajax({
+                url: '/api/Account/GetUsers',
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function () {
+                    console.log("Users received");
+                },
+                error: function () {
+                    console.log("Users not received");
+                }
+            });
+        }
+
         $(function () {
             var tokenKey = "tokenInfo";
-            //..................................
+
             $('#getItemsButton').click(function (e) {
                 e.preventDefault();
                 $.ajax({

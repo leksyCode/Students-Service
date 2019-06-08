@@ -6,10 +6,18 @@
     <h3>Registration </h3>
     <label>Введите email</label><br />
     <input type="email" id="email" /> <br /><br />
+    <label>Введите Имя</label><br />
+    <input type="text" id="firstname" /> <br /><br />
+    <label>Введите Фамилию</label><br />
+    <input type="text" id="lastname" /> <br /><br />
     <label>Введите пароль</label><br />
     <input type="password" id="password" /><br /><br />
     <label>Подтвердите пароль</label><br />
     <input type="password" id="confirmpassword" /><br /><br />
+    <label>Введите дату рождения</label><br />
+    <input type="date" id="birthdate" /><br /><br />
+    <label>Description: </label><br />
+    <input type="text" id="comment" /><br /><br />
     <input type="submit" id="submit" value="Регистрация" />
 </div>
 
@@ -23,6 +31,10 @@
                     Email: $('#email').val(),
                     Password: $('#password').val(),
                     ConfirmPassword: $('#confirmpassword').val(),
+                    BirthDate: $('#birthdate').val(),
+                    FirstName: $('#firstname').val(),
+                    LastName: $('#lastname').val(),
+                    Comment: $('#comment').val(),
                 };
 
                 $.ajax({

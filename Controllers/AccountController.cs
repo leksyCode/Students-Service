@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using AuthenticationWebApi.Models;
 using AuthenticationWebApi.Providers;
 using AuthenticationWebApi.Results;
+using System.Linq;
 
 namespace AuthenticationWebApi.Controllers
 {
@@ -23,6 +24,7 @@ namespace AuthenticationWebApi.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
         ClaimsPrincipal claim = new ClaimsPrincipal();
@@ -51,7 +53,14 @@ namespace AuthenticationWebApi.Controllers
             }
         }
 
-        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+        // POST api/Account/GetUsers
+        [Authorize]
+        [Route("GetUsers")]
+        public List<ApplicationUser> GetUsers()
+        {
+            var userList = UserManager.Users.ToList();
+            return userList;
+        }
 
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
@@ -82,12 +91,12 @@ namespace AuthenticationWebApi.Controllers
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
             IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-
+            var users =  UserManager.Users;
             if (user == null)
             {
                 return null;
             }
-
+            
             List<UserLoginInfoViewModel> logins = new List<UserLoginInfoViewModel>();
 
             foreach (IdentityUserLogin linkedAccount in user.Logins)
@@ -344,7 +353,7 @@ namespace AuthenticationWebApi.Controllers
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
 
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, BirthDate = model.BirthDate, FirstName = model.FirstName, LastName = model.LastName, Comment = model.Comment};
 
                 result = await UserManager.CreateAsync(user, model.Password);
                 await userManager.AddToRoleAsync(user.Id, "User");
