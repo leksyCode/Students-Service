@@ -15,6 +15,8 @@ namespace AuthenticationWebApi.Models
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public string Comment { get; set; }
+        public Nationality Nationality { get; set; }
+        public Faculty Faculty { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
@@ -27,6 +29,9 @@ namespace AuthenticationWebApi.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Nationality> Nationalities { get; set; }
+        public DbSet<Faculty> Faculties { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -34,8 +39,9 @@ namespace AuthenticationWebApi.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);        
-            modelBuilder.Entity<ApplicationUser>().ToTable("Students").Property(p => p.Id).HasColumnName("StudentId");
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ApplicationUser>().ToTable("Students").Property(p => p.Id).HasColumnName("StudentId");           
+
         }
 
         public static ApplicationDbContext Create()
@@ -44,3 +50,4 @@ namespace AuthenticationWebApi.Models
         }
     }
 }
+

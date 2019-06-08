@@ -1,9 +1,6 @@
 ﻿@{
-
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
-
 
 <h2>Students List</h2>
 
@@ -13,6 +10,10 @@
             <th>User name</th>
             <th style="padding-left: 20px;">First name</th>
             <th style="padding-left: 20px;">Last name</th>
+            <th style="padding-left: 20px;">Faculty name</th>
+            <th style="padding-left: 20px;">Faculty city</th>
+            <th style="padding-left: 20px;">Faculty address</th>
+            <th style="padding-left: 20px;">Nationality</th>
             <th style="padding-left: 20px;">Bitrhdate</th>
         </tr>
         @foreach (var item in ViewBag.Users)
@@ -28,6 +29,18 @@
                 @item.LastName
             </td>
             <td style="padding-left: 20px;">
+                @item.Faculty.Name
+            </td>
+            <td style="padding-left: 20px;">
+                @item.Faculty.City
+            </td>
+            <td style="padding-left: 20px;">
+                @item.Faculty.Adress
+            </td>
+            <td style="padding-left: 20px;">
+                @item.Nationality.Name
+            </td>
+            <td style="padding-left: 20px;">
                 @item.BirthDate.ToString("dd.MM.yy")
             </td>
         </tr>
@@ -35,8 +48,6 @@
 
     </table>
 </div>
-
-
 
 @section scripts{
     <script type="text/javascript">
@@ -65,28 +76,5 @@
                 }
             });
         }
-
-        $(function () {
-            var tokenKey = "tokenInfo";
-
-            $('#getItemsButton').click(function (e) {
-                e.preventDefault();
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/values/',
-                    beforeSend: function (xhr) {
-
-                        var token = window.localStorage.getItem(tokenKey);
-                        xhr.setRequestHeader("Authorization", "Bearer " + token);
-                    },
-                    success: function (data) {
-                        alert(data);
-                    },
-                    error: function (xhr) {
-                        alert('Error: ' + xhr.status + ' ' + xhr.statusText + '\n' + JSON.parse(xhr.responseText).Message);
-                    }
-                });
-            });
-        })
     </script>
 }

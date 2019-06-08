@@ -61,14 +61,31 @@ namespace AuthenticationWebApi.Models
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
 
+        [StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 1)]
+        [DataType(DataType.Text)]
+        public string Nationality { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
-
-        [Required]
+        
         [StringLength(500, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 1)]
         [DataType(DataType.Text)]
         [Display(Name = "Comment")]
         public string Comment { get; set; }
+
+        [StringLength(200, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 1)]
+        [DataType(DataType.Text)]
+        [Display(Name = "Faculty name")]
+        public string FacultyName { get; set; }
+
+        [StringLength(200, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 1)]
+        [DataType(DataType.Text)]
+        [Display(Name = "Faculty city")]
+        public string FacultyCity { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "Faculty adress")]
+        public string FacultyAdress { get; set; }
     }
 
     public class RegisterExternalBindingModel

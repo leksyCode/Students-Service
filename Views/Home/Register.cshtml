@@ -14,6 +14,14 @@
     <input type="password" id="password" /><br /><br />
     <label>Подтвердите пароль</label><br />
     <input type="password" id="confirmpassword" /><br /><br />
+    <label>Faculty name: </label><br />
+    <input type="text" id="facultyname" /><br /><br />
+    <label>Faculty city: </label><br />
+    <input type="text" id="facultycity" /><br /><br />
+    <label>Faculty adress: </label><br />
+    <input type="text" id="facultyadress" /><br /><br />
+    <label>Nationality: </label><br />
+    <input type="text" id="nationality" /><br /><br />
     <label>Введите дату рождения</label><br />
     <input type="date" id="birthdate" /><br /><br />
     <label>Description: </label><br />
@@ -35,6 +43,10 @@
                     FirstName: $('#firstname').val(),
                     LastName: $('#lastname').val(),
                     Comment: $('#comment').val(),
+                    Nationality: $('#nationality').val(),
+                    FacultyName: $('#facultyname').val(),
+                    FacultyCity: $('#facultycity').val(),
+                    FacultyAdress: $('#facultyadress').val(),
                 };
 
                 $.ajax({

@@ -26,8 +26,10 @@ namespace AuthenticationWebApi.Controllers
     {
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
         private const string LocalLoginProvider = "Local";
+        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationUserManager _userManager;
         ClaimsPrincipal claim = new ClaimsPrincipal();
+
         public AccountController()
         {
 
@@ -352,9 +354,8 @@ namespace AuthenticationWebApi.Controllers
 
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
-
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, BirthDate = model.BirthDate, FirstName = model.FirstName, LastName = model.LastName, Comment = model.Comment};
-
+              //  var nationality = new Nationality() { Name = model.Nationality}
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, BirthDate = model.BirthDate, FirstName = model.FirstName, LastName = model.LastName, Comment = model.Comment, Nationality = new Nationality {Name = model.Nationality }, Faculty = new Faculty {Name = model.FacultyName, City = model.FacultyCity, Adress = model.FacultyAdress } };
                 result = await UserManager.CreateAsync(user, model.Password);
                 await userManager.AddToRoleAsync(user.Id, "User");
             }

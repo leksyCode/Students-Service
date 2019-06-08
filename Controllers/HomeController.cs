@@ -24,7 +24,7 @@ namespace AuthenticationWebApi.Controllers
             }
             ViewBag.Title = "Home Page";
 
-            var Users = db.Users.Include(u => u.Roles).ToList();
+            var Users = db.Users.Include(u => u.Roles).Include(n => n.Nationality).Include(f => f.Faculty).ToList();
             ViewBag.Users = Users;
              
             return View();
